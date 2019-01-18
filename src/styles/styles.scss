@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/scss/bootstrap";
+@import "colors";
+
+
+
+// Generic page styling
+.page-border {
+    @extend .offset-md-3;
+    @extend .col-md-6;
+    margin-bottom: 25px;
+}
+
+.page-header {
+    text-align: center;
+    background-color: $bg-color;
+    @extend .offset-md-0;
+    @extend .col-md-12;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    color: white;
+}
+
+.page {
+    background-color: $white;
+    height: 200%;
+}
