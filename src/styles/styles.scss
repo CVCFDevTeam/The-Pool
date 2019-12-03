@@ -1,27 +1,247 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~bootstrap/scss/bootstrap";
-@import "colors";
 
+@import '~bootstrap/scss/bootstrap';
+@import 'colors';
+@import '~@angular/material/theming';
+@import '~ngx-toastr/toastr.css';
+// @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+@import './shared/side-nav.component';
+@import './pages/attendance.page';
+@import './pages/login.component';
+@import './pages/overview.component.scss';
+@import './pages/teams.component';
 
-// Generic page styling
-.page-border {
-    @extend .offset-md-3;
-    @extend .col-md-6;
-    margin-bottom: 25px;
+// Use Ionic Icons
+$ionicons-font-path: '~ionicons/dist/fonts';
+@import '~ionicons/dist/scss/ionicons.scss';
+
+/* Angular Material Themes
+    **Be sure that you only ever include mat-core mixin once!**
+*/
+
+// https://material.io/archive/guidelines/style/color.html#color-color-palette
+@include mat-core();
+$main-theme-primary: mat-palette($mat-blue-grey);
+$main-theme-accent: mat-palette($mat-blue-grey, A200, A100, A400);
+$main-theme-warn: mat-palette($mat-red);
+$main-theme: mat-light-theme($main-theme-primary, $main-theme-accent, $main-theme-warn);
+@include angular-material-theme($main-theme);
+
+// google fonts
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+
+html,
+body {
+    margin: 0;
+    height: 100%;
 }
 
-.page-header {
-    text-align: center;
-    background-color: $bg-color;
-    @extend .offset-md-0;
-    @extend .col-md-12;
-    padding-bottom: 10px;
-    padding-top: 10px;
+* {
+    font-family: 'Roboto', serif;
+}
+
+.page-title {
+    padding: 0px 0px 15px 0px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.button-container {
+    @extend .container;
+    @extend .col-md-2;
+}
+
+.default-button {
     color: white;
+    font-weight: bold;
 }
 
-.page {
-    background-color: $white;
-    height: 200%;
+.create-button {
+    @extend .default-button;
+    background-color: $baby-blue;
+}
+
+.excel-button.mat-raised-button {
+    @extend .default-button;
+    background-color: $excel-green;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.action-icon {
+    font-size: 30px;
+    padding: 0px 15px 0px 5px;
+}
+
+.edit-icon {
+    @extend .action-icon;
+    color: $light-green;
+}
+
+.delete-icon {
+    @extend .action-icon;
+    color: $lipstick-red;
+}
+
+// Side Nav Styles
+
+.sidenav-locked-open {
+    display: flex;
+    visibility: visible !important;
+    position: relative;
+    width: 18%;
+    min-width: 50px;
+    max-width: 272px;
+    background-color: $bg-color;
+    text-align: center;
+    height: 100vh;
+
+    .logo {
+        width: calc(100% - 20px);
+        margin: 20px 10px;
+    }
+
+    .ministry-select {
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-weight: 200;
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    button:hover {
+        color: lightgrey;
+        cursor: pointer;
+    }
+
+    button:focus {
+        outline: 0;
+    }
+
+    .mat-nav-list .mat-list-item {
+        color: white;
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 300;
+        border-bottom: 0.5px solid grey;
+
+        i {
+            margin-right: 20px;
+            font-size: 1.5rem;
+        }
+    }
+
+    a:hover,
+    a:active {
+        color: lightgray;
+    }
+
+    .user-profile {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+
+        .user-avatar {
+            margin-bottom: 10px;
+
+            img {
+                border-radius: 50%;
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        p {
+            color: white;
+        }
+    }
+
+    .logout-link {
+        cursor: pointer;
+        color: white;
+    }
+}
+
+/* Styling for all tables */
+.mat-table {
+    width: 100%;
+    min-height: 60%;
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+input.mat-input-element {
+    margin-top: -0.0625em;
+    // background-color: lightgray;
+    // border: 2px solid black;
+    // padding: 5px;
+    // border-radius: 5px;
+}
+
+.mat-action-row {
+    border-top-style: solid;
+    border-top-width: 1px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 16px 8px 16px 24px;
+}
+
+.dropdown {
+    .mat-form-field-underline {
+        display: none;
+    }
+
+    .mat-form-field-label.mat-empty.mat-form-field-empty.ng-star-inserted {
+        padding: 10px;
+    }
+}
+
+.extra-small-dialog-input {
+    @extend .col-md-2;
+}
+
+.small-dialog-input {
+    @extend .col-md-4;
+}
+
+.medium-dialog-input {
+    @extend .col-md-6;
+}
+
+.large-dialog-input {
+    @extend .col-md-8;
+}
+
+.extra-large-dialog-input {
+    @extend .col-md-12;
+}
+
+// ********* GRID CSS ********* //
+.grid {
+    display: block;
+    margin: auto;
+}
+
+.row {
+    display: flex;
+}
+
+.col {
+    margin: 0;
+    padding: 5px;
+}
+
+.tshirt-size {
+    font-size: 24px;
+    font-weight: bold;
+    padding-left: 27%;
 }

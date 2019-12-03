@@ -1,0 +1,51 @@
+<div class="app-page">
+
+    <!-- side navigation -->
+    <mat-sidenav class="sidenav-locked-open">
+        <img class="logo" src="../../assets/cvcf-logo-black.jpg">
+
+        <button class="ministry-select">
+            <span>Youth Retreat <i class="icon ion-ios-arrow-down"></i></span>
+        </button>
+
+        <mat-nav-list class="navigation">
+            <a mat-list-item routerLink="/the-pool/overview" *ngIf="userhasAccess">
+                <i class="icon ion-md-home"></i>
+                <span class="nav-caption">Overview</span>
+            </a>
+
+            <a mat-list-item routerLink="/the-pool/attendance" *ngIf="userhasAccess">
+                <i class="icon ion-md-analytics"></i>
+                <span class="nav-caption">Data</span>
+            </a>
+
+            <a mat-list-item routerLink="/the-pool/checkin">
+                <i class="icon ion-md-chatboxes"></i>
+                <span class="nav-caption">Check In</span>
+            </a>
+            <a mat-list-item routerLink="/the-pool/teams" *ngIf="userhasAccess">
+                <i class="icon ion-md-contacts"></i>
+                <span class="nav-caption">Teams</span>
+            </a>
+        </mat-nav-list>
+
+        <div class="user-profile">
+            <div class="user-avatar">
+                <img src="{{userPhotoLoc}}" />
+            </div>
+
+            <p>{{userName}}</p>
+
+            <div class="logout-link">
+                <a (click)="onLogout()">Logout</a>
+            </div>
+        </div>
+
+    </mat-sidenav>
+
+    <!--  display pages-->
+    <main class="content-container">
+        <router-outlet></router-outlet>
+    </main>
+
+</div>

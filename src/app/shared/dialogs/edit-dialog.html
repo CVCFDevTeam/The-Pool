@@ -1,0 +1,137 @@
+<h1 mat-dialog-title>{{attendeeName ? attendeeName : "New Attendee"}}</h1>
+
+<mat-dialog-content [formGroup]="form" style="max-height: 85vh">
+    <mat-form-field class="medium-dialog-input">
+        <input matInput placeholder="First Name" formControlName="first_name" required>
+    </mat-form-field>
+    <mat-form-field class="medium-dialog-input">
+        <input matInput placeholder="Last Name" formControlName="last_name" required>
+    </mat-form-field>
+    <mat-form-field class="small-dialog-input dropdown">
+        <mat-select class="form-control" formControlName="t_shirt" placeholder="T Shirt Size" required>
+            <mat-option disabled selected value> --Select-- </mat-option>
+            <mat-option *ngFor="let size of sizes" [value]="size">{{size}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="small-dialog-input dropdown">
+        <mat-select class="form-control" formControlName="gender" placeholder="Gender" required>
+            <mat-option disabled selected value> --Select-- </mat-option>
+            <mat-option *ngFor="let gender of genders" [value]="gender">{{gender}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="small-dialog-input">
+        <input matInput placeholder="Age" formControlName="age" required>
+    </mat-form-field>
+
+    <div class="small-dialog-input" style="margin: 0px 0px 15px 15px;">
+        <div class="row">
+            <div style="padding-right: 15px;"><b>Checked In</b></div>
+            <mat-checkbox formControlName="checked_in" placeholder="Checked In"></mat-checkbox>
+        </div>
+    </div>
+    <mat-form-field class="extra-large-dialog-input">
+        <input matInput placeholder="Discount Code Used" formControlName="discount">
+    </mat-form-field>
+    <mat-form-field class="extra-large-dialog-input">
+        <textarea matInput class="form-control" type="text" formControlName="medical"
+            placeholder="Medical Issues/Allergies (N/A if none)" required></textarea>
+    </mat-form-field>
+    <mat-form-field class="extra-large-dialog-input">
+        <input matInput placeholder="Address" formControlName="address" required>
+    </mat-form-field>
+    <mat-form-field class="extra-large-dialog-input">
+        <input matInput placeholder="Address 2" formControlName="address_2">
+    </mat-form-field>
+    <mat-form-field class="small-dialog-input">
+        <input matInput placeholder="City" formControlName="city" required>
+    </mat-form-field>
+    <mat-form-field class="small-dialog-input dropdown">
+        <mat-select class="form-control" formControlName="state" placeholder="State" required>
+            <mat-option disabled selected value> --Select-- </mat-option>
+            <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="small-dialog-input">
+        <input matInput placeholder="Zip Code" formControlName="zip_code" required>
+    </mat-form-field>
+    <mat-form-field class="extra-large-dialog-input">
+        <input matInput placeholder="Email" formControlName="email">
+    </mat-form-field>
+    <mat-form-field class="medium-dialog-input">
+        <input matInput placeholder="Emergency Contact First Name" formControlName="emergency_contact_first_name"
+            required>
+    </mat-form-field>
+    <mat-form-field class="medium-dialog-input">
+        <input matInput placeholder="Emergency Contact Last Name" formControlName="emergency_contact_last_name"
+            required>
+    </mat-form-field>
+    <mat-form-field class="medium-dialog-input">
+        <input matInput appPhoneMask placeholder="Emergency Contact Phone Number"
+            formControlName="emergency_contact_phone_number" required>
+    </mat-form-field>
+    <mat-form-field class="medium-dialog-input">
+        <input matInput placeholder="Emergency Contact Relationship" formControlName="emergency_contact_relationship"
+            required>
+    </mat-form-field>
+    <mat-form-field class="extra-large-dialog-input">
+        <input matInput placeholder="Church" formControlName="your_church">
+    </mat-form-field>
+    <mat-form-field class="medium-dialog-input">
+        <input matInput placeholder="Church Point of Contact Name" formControlName="your_church_point_of_contact_name">
+    </mat-form-field>
+    <mat-form-field class="medium-dialog-input">
+        <input matInput appPhoneMask placeholder="Church Point of Contact Number"
+            formControlName="your_church_point_of_contact_number">
+    </mat-form-field>
+    <mat-form-field class="extra-large-dialog-input dropdown">
+        <mat-select class="form-control" formControlName="days_attending" placeholder="Days Attending" multiple>
+            <mat-option disabled selected value> --Select-- </mat-option>
+            <mat-option *ngFor="let days_attending of days_attendings" [value]="days_attending">{{days_attending}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="small-dialog-input">
+        <input matInput placeholder="Attendee Cost" formControlName="cost">
+    </mat-form-field>
+    <mat-form-field class="small-dialog-input dropdown">
+        <mat-select class="form-control" formControlName="role" placeholder="Role">
+            <mat-option disabled selected value> --Select-- </mat-option>
+            <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="small-dialog-input dropdown">
+        <mat-select class="form-control" formControlName="paid_status" placeholder="Paid Status">
+            <mat-option disabled selected value> --Select-- </mat-option>
+            <mat-option *ngFor="let paid_status of paid_statuses" [value]="paid_status">{{paid_status}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="medium-dialog-input dropdown">
+        <mat-select class="form-control" formControlName="room_location" placeholder="Room Location">
+            <mat-option disabled selected value> --Select-- </mat-option>
+            <mat-option *ngFor="let room_location of room_locations" [value]="room_location">{{room_location}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="medium-dialog-input dropdown">
+        <mat-select class="form-control" formControlName="team" placeholder="Team">
+            <mat-option disabled selected value> --Select-- </mat-option>
+            <mat-option *ngFor="let team of teams" [value]="team">{{team}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="extra-large-dialog-input dropdown">
+        <mat-select class="form-control" formControlName="group_leader" placeholder="Group Leaders">
+            <mat-option disabled selected value> --Select-- </mat-option>
+            <mat-option *ngFor="let group_leader of group_leaders" [value]="group_leader">{{group_leader}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="extra-large-dialog-input">
+        <textarea matInput class="form-control" type="text" placeholder="Notes" formControlName="notes"></textarea>
+    </mat-form-field>
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button class="mat-raised-button" (click)="onClose()">Close</button>
+    <button class="mat-raised-button mat-primary" (click)="onSave()">Save</button>
+</mat-dialog-actions>

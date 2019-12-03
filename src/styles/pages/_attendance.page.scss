@@ -1,0 +1,152 @@
+@import '../colors';
+
+/* Master Page Styling */
+.attendance {
+    display: flex;
+    flex-direction: column;
+}
+
+.attendee-main-row {
+    position: relative;
+}
+
+.attendee-main-row:not(.expanded) {
+    cursor: pointer;
+}
+
+.attendee-main-row:not(.expanded):hover {
+    background: #f5f5f5;
+}
+
+.attendee-main-row.expanded {
+    background: green;
+}
+
+.attendee-info-row {
+    cursor: default;
+}
+
+.attendee-info-row.expanded {
+    background: green;
+}
+
+/* Search Bar Styles */
+.search-bar-container {
+    @extend .container;
+    margin-bottom: 5px;
+}
+
+.search-bar-row {
+    @extend .row;
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: column;
+    border: 3px;
+    border-style: solid;
+    border-color: $bg-color;
+    background-color: $light-grey;
+    border-radius: 10px;
+    padding: 0px 10px;
+}
+
+.search-bar > * {
+    width: 100%;
+}
+
+.dropdown-container {
+    @extend .container;
+    height: 45px;
+}
+
+.dropdown-row {
+    @extend .row;
+}
+
+// .mat-form-field-infix {
+//     border-top: none;
+// }
+
+// .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+//     padding-bottom: 5px;
+// }
+
+// .mat-form-field-appearance-legacy .mat-form-field-underline {
+//     top: 35%;
+// }
+
+.small-table-column {
+    display: flex;
+    justify-content: center;
+}
+
+.attendee-primary-details {
+    @extend .col-md-12;
+    margin-bottom: 15px;
+}
+
+.attendee-secondary-details {
+    @extend .row;
+    margin-bottom: 15px;
+}
+
+.attendee-expanded-details {
+    width: 100%;
+    padding-top: 15px;
+}
+
+.details-primary-row {
+    @extend .row;
+    margin-bottom: 10px;
+}
+
+.detail-entry {
+    padding-right: 10px;
+}
+
+.role-icon {
+    font-size: 30px;
+    margin-left: 10px;
+    margin-top: -7px;
+}
+
+.role-icon-attendee {
+    color: $aqua;
+}
+
+.role-icon-leader {
+    color: $purple;
+}
+
+.role-icon-staff {
+    color: $grey;
+}
+
+.role-icon-board {
+    color: $pink;
+}
+
+.role-icon-band {
+    color: $light-orange;
+}
+
+.role-icon-speaker {
+    color: $dark-red;
+}
+
+.role-icon-servants {
+    color: $gold;
+}
+
+.role-icon-adults {
+    color: $mint;
+}
+
+.role-icon-arts {
+    color: $brown;
+}
+
+.role-security {
+    color: $dark-blue;
+}

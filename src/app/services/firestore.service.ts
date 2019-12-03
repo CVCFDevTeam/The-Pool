@@ -1,76 +1,85 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as firebase from 'firebase';
-import firestore from 'firebase/firestore'
+import { Attendee } from 'src/app/models/attendee';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class FirestoreService {
 
-  collection = firebase.firestore().collection('attendees');
+    collectionName = '<Collection Name in Cloud Firestore>';
+    collection: AngularFirestoreCollection;
+    attendees: Observable<Attendee[]>;
+    addedField: Boolean;
 
-  constructor() { }
+    constructor(private db: AngularFirestore) {
+        this.collection = this.db.collection(this.collectionName);
+    }
 
-  getAttendees(): Observable<any> {
-    return new Observable((observer) => {
-      this.collection.onSnapshot((querySnapshot) => {
-        let attendees = [];
-        querySnapshot.forEach((doc) => {
-          let data = doc.data();
-          attendees.push({
-            key: doc.id,
-            title: data.title,
-            description: data.description,
-            author: data.author
-          });
+    getAttendees(): Observable<any> {
+        return this.collection.snapshotChanges();
+    }
+
+    sortByAgeAttendees(): Observable<any> {
+        return this.db.collection(this.collectionName, ref => ref.orderBy('age')).snapshotChanges();
+    }
+
+    getAttendee(id: string): Observable<any> {
+        return this.collection.doc(id).get();
+    }
+
+    postAttendee(data: Attendee): Observable<any> {
+        return new Observable((observer) => {
+            this.collection.add(Object.assign({}, data)).then((doc) => {
+                observer.next({
+                    key: doc.id
+                });
+            });
         });
-        observer.next(attendees);
-      });
-    });
-  }
-  
-  getAttendee(id: string): Observable<any> {
-    return new Observable((observer) => {
-      this.collection.doc(id).get().then((doc) => {
-        let data = doc.data();
-        observer.next({
-          key: doc.id,
-          title: data.title,
-          description: data.description,
-          author: data.author
+    }
+
+    updateAttendee(id: string, data: Attendee): Observable<any> {
+        return new Observable((observer) => {
+            this.db.doc(this.collectionName + '/' + id).update(Object.assign({}, data)).then(() => {
+                observer.next();
+            });
         });
-      });
-    });
-  }
-  
-  postAttendees(data): Observable<any> {
-    return new Observable((observer) => {
-      data.forEach(x => {
-        this.collection.add(JSON.parse(JSON.stringify(x))).then((doc) => {
-          observer.next({
-            key: doc.id,
-          });
+
+    }
+
+    deleteAttendee(id: string): Observable<any> {
+        return new Observable((observer) => {
+            this.db.doc(this.collectionName + '/' + id).delete().then(() => {
+                observer.next();
+            });
         });
-      })
-      
-    });
-  }
-  
-  updateAttendees(id: string, data): Observable<any> {
-    return new Observable((observer) => {
-      this.collection.doc(id).set(data).then(() => {
-        observer.next();
-      });
-    });
-  }
-  
-  deleteAttendees(id: string): Observable<{}> {
-    return new Observable((observer) => {
-      this.collection.doc(id).delete().then(() => {
-        observer.next();
-      });
-    });
-  }
+    }
+
+    updateCheckIn(id: string): Observable<any> {
+        return new Observable((observer) => {
+            this.db.doc(this.collectionName + '/' + id).update(({ checked_in: true })).then(() => {
+                observer.next();
+            });
+        });
+    }
+
+    updateRole(id: string): Observable<any> {
+        return new Observable((observer) => {
+            this.db.doc(this.collectionName + '/' + id).update(({ role: 'Attendee' })).then(() => {
+                observer.next();
+            });
+        });
+    }
+
+    updateGroup(id: string, team: string) {
+        this.db.doc(this.collectionName + '/' + id).update(({ team: team }));
+    }
+
+
+    // maybe useful in the future when checkedin column is added prior to checkin
+    getNotCheckedInAttendees() {
+        return this.db.collection(this.collectionName, ref => ref.where('checked_in', '==', false)).snapshotChanges();
+
+    }
 }
