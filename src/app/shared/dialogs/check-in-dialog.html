@@ -1,0 +1,18 @@
+<mat-dialog-content [formGroup]="checkindialog">
+    <h1 mat-dialog-title>Thank you {{first_name}} {{last_name}} for checking in!</h1>
+
+    <strong>Please remember to complete the following:</strong>
+    <ol>
+        <li>Take a T-shirt size: <br />
+            <div class="tshirt-size">{{t_shirt}}</div>
+        </li>
+        <li>Take a booklet and a pen</li>
+        <li>Turn in your waiver form</li>
+    </ol>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button class="mat-raised-button mat-primary" (click)="close()">Continue</button>
+    <button class="mat-raised-button mat-warn" (click)="onUndoCheckin()">Undo</button>
+</mat-dialog-actions>

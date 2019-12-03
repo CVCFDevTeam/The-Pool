@@ -1,0 +1,54 @@
+<div class="checkin">
+
+    <div class="page-title">
+        <span>Check-In</span>
+    </div>
+
+    <div class="search-bar-border">
+        <div class="search-bar">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search here...">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <mat-paginator [pageSizeOptions]="[10, 15, 50, 250]"></mat-paginator>
+
+    <!-- Header and Displayed Row -->
+    <mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="mat-elevation-z8">
+
+        <ng-container matColumnDef="first_name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+            <mat-cell *matCellDef="let attendee"> {{attendee.first_name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="last_name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+            <mat-cell *matCellDef="let attendee"> {{attendee.last_name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="age">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Age </mat-header-cell>
+            <mat-cell *matCellDef="let attendee"> {{attendee.age}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="gender">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Gender </mat-header-cell>
+            <mat-cell *matCellDef="let attendee"> {{attendee.gender}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="your_church">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Church </mat-header-cell>
+            <mat-cell *matCellDef="let attendee"> {{attendee.your_church}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Check-In </mat-header-cell>
+            <mat-cell *matCellDef="let attendee">
+                <div *ngIf="!attendee.checked_in; else display_checked_in">
+                    <button mat-raised-button color="primary" (click)="checkin(attendee)">Check-In</button>
+                </div>
+                <ng-template #display_checked_in>Checked In</ng-template>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnsToDisplay;" class=""></mat-row>
+    </mat-table>
+
+</div>

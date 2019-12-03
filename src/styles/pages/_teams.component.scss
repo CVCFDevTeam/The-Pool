@@ -1,0 +1,34 @@
+@import '../colors';
+
+.teams-container {
+    @extend .container;
+    margin-top: 3%;
+    margin-bottom: 5%;
+}
+
+.team-box {
+    padding: 5px 20px;
+    font-size: 24px;
+    border: 1px solid $light-bg-color;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.arrow-icon {
+    float: right;
+}
+
+.selected-team-title {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+
+.team-leaders-section {
+    padding: 0px 10px 10px 10px;
+}
+
+.team-leaders-row {
+    @extend .row;
+    padding: 5px 0px;
+}

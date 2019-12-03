@@ -1,0 +1,179 @@
+<div class="attendance" *ngIf="userhasAccess">
+
+    <div class="page-title">
+        <span>Data</span>
+    </div>
+
+    <div class="search-bar-container">
+        <div class="search-bar-row">
+            <div class="col-md-2">
+                <button *ngIf="this.deletedAttendee" mat-raised-button color="warn" (click)="restoreAttendee()">
+                    Undo Delete Attendee
+                </button>
+            </div>
+            <div class="col-md-8">
+                <div class="search-bar">
+                    <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)"
+                            placeholder="Search attendee here...">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button mat-raised-button class="create-button" (click)="createAttendee()">Add New Attendee</button>
+            </div>
+        </div>
+    </div>
+
+    <button mat-raised-button class="excel-button" (click)="onExportCSV()">Export to Excel</button>
+
+
+    <div class="dropdown-container">
+        <div class="dropdown-row">
+            <div class="col-md-12">
+                <mat-form-field class="medium-dialog-input dropdown">
+                    <mat-select class="form-control" placeholder="Filter Room Location Here..."
+                        (selectionChange)="filterByDropdown($event.value, 'room_location')">
+                        <mat-option value> --ALL-- </mat-option>
+                        <mat-option *ngFor="let room_location of room_locations" [value]="room_location">
+                            {{room_location}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="medium-dialog-input dropdown">
+                    <mat-select class="form-control" placeholder="Filter Team Here..."
+                        (selectionChange)="filterByDropdown($event.value, 'team')">
+                        <mat-option value> --ALL-- </mat-option>
+                        <mat-option *ngFor="let team of teams" [value]="team">{{team}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <mat-paginator [pageSizeOptions]="[10, 15, 50, 250]"></mat-paginator>
+
+    <!-- Header and Displayed Row -->
+    <mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="mat-elevation-z8">
+        <ng-container matColumnDef="first_name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+            <mat-cell *matCellDef="let attendee"> {{attendee.first_name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="last_name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+            <mat-cell *matCellDef="let attendee"> {{attendee.last_name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="t_shirt">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="small-table-column"> T Shirt Size
+            </mat-header-cell>
+            <mat-cell *matCellDef="let attendee" class="small-table-column"> {{attendee.t_shirt}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="age">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Age </mat-header-cell>
+            <mat-cell *matCellDef="let attendee"> {{attendee.age}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="gender">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Gender </mat-header-cell>
+            <mat-cell *matCellDef="let attendee"> {{attendee.gender}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="room_location">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Room Location </mat-header-cell>
+            <mat-cell *matCellDef="let attendee"> {{attendee.room_location}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="team">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Team </mat-header-cell>
+            <mat-cell *matCellDef="let attendee"> {{attendee.team}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="your_church">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Church </mat-header-cell>
+            <mat-cell *matCellDef="let attendee"> {{attendee.your_church}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="checked_in">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="small-table-column"> Checked In </mat-header-cell>
+            <mat-cell *matCellDef="let attendee" class="small-table-column">
+                <mat-checkbox [(ngModel)]="attendee.checked_in" disabled></mat-checkbox>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+            <mat-cell *matCellDef="let attendee" [attr.colspan]="columnsToDisplay.length">
+                <div class="attendee-expanded-details">
+                    <div class="attendee-primary-details">
+                        <div class="details-primary-row">
+                            <h4>{{attendee.role}}</h4>
+                            <i class="role-icon" [ngClass]="getRoleIcon(attendee)"></i>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="details-primary-row">
+                                    {{attendee.days_attending}}
+                                </div>
+                                <div class="details-primary-row">
+                                    <div class="detail-entry">{{attendee.paid_status}}</div>
+                                    <div class="detail-entry">{{attendee.cost | currency}}</div>
+                                    <div class="detail-entry">Code: {{attendee.discount}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h6>Medical Information:</h6>
+                                {{attendee.medical}}
+                            </div>
+                            <div class="col-md-4">
+                                <h6>Other Notes:</h6>
+                                {{attendee.notes}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attendee-secondary-details">
+                        <div class="col-md-4">
+                            <h6>Personal Contact:</h6>
+                            {{attendee.email}}
+                            <br />
+                            {{attendee.address}}
+                            {{attendee.address_2}}
+                            <br />
+                            {{attendee.city}}
+                            {{attendee.state}}
+                            {{attendee.zip_code}}
+                        </div>
+                        <div class="col-md-4">
+                            <h6>Emergency Contact:</h6>
+                            {{attendee.emergency_contact_relationship}}
+                            <br />
+                            {{attendee.emergency_contact_first_name}} {{attendee.emergency_contact_last_name}}
+                            <br />
+                            {{attendee.emergency_contact_phone_number}}
+                        </div>
+                        <div class="col-md-4">
+                            <h6>Church Info</h6>
+                            {{attendee.your_church}}
+                            <br />
+                            {{attendee.your_church_point_of_contact_name}}
+                            <br />
+                            {{attendee.your_church_point_of_contact_number}}
+                        </div>
+                    </div>
+
+                    <mat-action-row>
+                        <button mat-button color="primary" (click)="editAttendee(attendee)">Edit Attendee</button>
+                        <button mat-button color="warn" (click)="deleteAttendee(attendee)">Delete Attendee</button>
+                    </mat-action-row>
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Header and Row Declarations -->
+        <mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let attendee; columns: columnsToDisplay;" class="attendee-main-row"
+            [class.example-expanded-row]="expandedAttendee === attendee"
+            (click)="expandedAttendee = expandedAttendee === attendee ? null : attendee">
+        </mat-row>
+        <mat-row *matRowDef="let attendee; columns: ['expandedDetail']" class="attendee-info-row"
+            [@detailExpand]="attendee == expandedAttendee ? 'expanded' : 'collapsed'"></mat-row>
+    </mat-table>
+
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnsToDisplay;" class=""></mat-row>
+</div>

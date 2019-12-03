@@ -1,0 +1,189 @@
+<div class="page-title">
+    <span>Overview</span>
+</div>
+
+<div class="grid" *ngIf="userhasAccess">
+
+    <!--first row-->
+    <div class="row">
+
+        <!-- number of attendees -->
+        <div class="col">
+            <div class="card summary-card" id="attendees">
+                <span class="number">{{numberOfAttendees}}</span>
+                <span class="type">Attendees</span>
+                <i class="icon ion-md-people card-icon"></i>
+            </div>
+        </div>
+
+        <!-- number of churches -->
+        <div class="col">
+            <div class="card summary-card" id="churches">
+                <span class="number">{{numberOfChurches}}</span>
+                <span class="type">Churches</span>
+                <i class="icon ion-md-business card-icon"></i>
+            </div>
+        </div>
+
+        <!-- number of states -->
+        <div class="col">
+            <div class="card summary-card" id="states">
+                <span class="number">{{numberOfStates}}</span>
+                <span class="type">States</span>
+                <i class="icon ion-md-map card-icon"></i>
+            </div>
+        </div>
+
+        <!-- number of servants -->
+        <div class="col">
+            <div class="card summary-card" id="servants">
+                <span class="number">{{numberOfServants}}</span>
+                <span class="type">Servants</span>
+                <i class="icon ion-md-hand card-icon"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- spacing between rows -->
+    <div class="row" style="height: 20px"></div>
+
+    <!--second row-->
+    <div class="row">
+
+        <!-- growth graph-->
+        <div class="col col-6">
+            <div class="card info-card">
+                <p class="card-title">Attendee Growth</p>
+                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                    [legend]="barChartLegend" [chartType]="barChartType" id="baseChart">
+                </canvas>
+            </div>
+        </div>
+
+        <!-- age groups -->
+        <div class="col">
+            <div class="card info-card">
+                <p class="card-title"># of Attendees in each Age Group</p>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="number">{{ageGroupOne}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="type">13 yr - under</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="number">{{ageGroupTwo}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="type">14 yr - 17 yr</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="number">{{ageGroupThree}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="type">18 yr - 21 yr</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="number">{{ageGroupFour}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="type">22 yr - older</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- gender -->
+        <div class="col">
+            <div class="card info-card" style="height: 100%">
+                <p class="card-title">Gender</p>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="number">{{numberOfMales}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="type">Male</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="number">{{numberOfFemales}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="type">Female</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- spacing between rows -->
+    <div class="row" style="height: 20px"></div>
+
+    <div class="row">
+
+        <!-- heat map -->
+        <div class="col col-6">
+            <div class="card info-card" style="height: 100%;">
+                <p class="card-title">State Heat Map</p>
+                <div id="map"></div>
+            </div>
+        </div>
+
+        <!-- other info -->
+        <div class="col">
+
+            <div class="row">
+                <div class="col">
+                    <div class="card info-card">
+                        <p class="card-title">Number of Feedback</p>
+                        <p class="value">{{numberOfFeedback}}</p>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card info-card">
+                        <p class="card-title">Recent Sign up</p>
+                        <p class="value">{{recentSignUp}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="card info-card">
+                        <p class="card-title">Projected Payments</p>
+                        <p class="value">{{payments | currency}}</p>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card info-card">
+                        <p class="card-title">Donations</p>
+                        <p class="value">{{donations | currency}}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

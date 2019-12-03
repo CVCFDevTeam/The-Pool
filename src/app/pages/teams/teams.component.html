@@ -1,0 +1,98 @@
+<div class="teams-container" *ngIf="userhasAccess">
+    <div class="row">
+        <div class="col-md-3">
+            <h4 style="margin-bottom: 90px;">Select a Team:</h4>
+            <div class="team-box" *ngFor="let team of teams; let i = index" (click)="chooseTeam(team)"
+                [style.color]="colors[i]" [style.border-left]="'6px solid ' + colors[i]">
+                {{ team }}
+
+                <div class="arrow-icon" [style.color]="colors[i]">
+                    <i class="icon ion-md-arrow-dropright"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9" *ngIf="selectedTeam">
+
+            <div class="row">
+                <h4 class="selected-team-title" [style.color]="colors[selectedTeamNumber]">
+                    {{ selectedTeam }}
+                </h4>
+            </div>
+            <div class="team-leaders-section" *ngIf="selectedTeamNumber < 7">
+                <div class="team-leaders-row">
+                    <div class="col-md-3">
+                        Male Leader:
+                    </div>
+                    <div class="col-md-3">
+                        {{ leaders[selectedTeamNumber*2] }}
+                    </div>
+                    <div class="col-md-3">
+                        Female Leader:
+                    </div>
+                    <div class="col-md-3">
+                        {{ leaders[selectedTeamNumber*2+1] }}
+                    </div>
+                </div>
+                <div class="team-leaders-row">
+                    <div class="col-md-3">
+                        Male Co-Leader:
+                    </div>
+                    <div class="col-md-3">
+                        {{ coleaders[selectedTeamNumber*2] }}
+                    </div>
+                    <div class="col-md-3">
+                        Female Co-Leader:
+                    </div>
+                    <div class="col-md-3">
+                        {{ coleaders[selectedTeamNumber*2+1] }}
+                    </div>
+                </div>
+            </div>
+
+            <mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="mat-elevation-z8">
+
+                <ng-container matColumnDef="first_name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+                    <mat-cell *matCellDef="let attendee"> {{attendee.first_name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="last_name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+                    <mat-cell *matCellDef="let attendee"> {{attendee.last_name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="age">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Age </mat-header-cell>
+                    <mat-cell *matCellDef="let attendee"> {{attendee.age}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="gender">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Gender </mat-header-cell>
+                    <mat-cell *matCellDef="let attendee"> {{attendee.gender}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="room_location">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Room </mat-header-cell>
+                    <mat-cell *matCellDef="let attendee"> {{attendee.room_location}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="your_church">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Church </mat-header-cell>
+                    <mat-cell *matCellDef="let attendee"> {{attendee.your_church}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="checked_in">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="small-table-column"> Move To Different
+                        Team... </mat-header-cell>
+                    <mat-cell *matCellDef="let attendee" class="small-table-column">
+                        <mat-select class="form-control" placeholder="Move To..."
+                            (selectionChange)="changeTeam(attendee, $event.value)">
+                            <mat-option disabled selected value> --Move To-- </mat-option>
+                            <mat-option *ngFor="let team of teams" [value]="team">{{team}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columnsToDisplay;" class=""></mat-row>
+            </mat-table>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,77 @@
+.summary-card {
+    color: white;
+    position: relative;
+    min-height: 123px;
+    padding: 12px;
+    margin: 0 20px;
+    border: none;
+
+    .number {
+        font-size: 2.2rem;
+    }
+
+    .type {
+        font-size: 1.2rem;
+        font-weight: lighter;
+    }
+
+    .card-icon {
+        position: absolute;
+        top: -16px;
+        right: 15px;
+        opacity: 0.5;
+        font-size: 7rem;
+    }
+}
+
+.summary-card#attendees {
+    background-color: #6ccac9;
+}
+
+.summary-card#churches {
+    background-color: #fd7a6f;
+}
+
+.summary-card#states {
+    background-color: #ffbe58;
+}
+
+.summary-card#servants {
+    background-color: #57c8f2;
+}
+
+.info-card {
+    @extend .summary-card;
+
+    padding: 12px;
+    box-shadow: 2px 3px 8px 1px rgba(0, 0, 0, 0.5);
+    color: black;
+
+    .card-title {
+        font-weight: bold;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .number {
+        padding-left: 20px;
+        text-align: center;
+    }
+
+    .type {
+        padding-top: 10px;
+        text-align: center;
+    }
+
+    .value {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 300;
+    }
+}
+
+#map {
+    height: 100%;
+}
