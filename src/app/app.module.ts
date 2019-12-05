@@ -52,7 +52,7 @@ import { PhoneMaskDirective } from './shared/phone-mask.directive';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        AngularFireModule.initializeApp(environment.firebase, 'cvcf-attendees'),
+        AngularFireModule.initializeApp(environment.firebase, '<firebase project name>'),
         AngularFirestoreModule,
         AngularFireAuthModule,
         ToastrModule.forRoot({
